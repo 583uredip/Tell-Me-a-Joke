@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Tell me a Joke</title>
+</head>
+<body class=" bg-gray-500 min-h-screen flex items-center justify-center p-4">
+<div class=" flex flex-col justify-center items-center gap-6 w-full max-w-lg mx-auto">
+<div> <h1 class=" font-extrabold text-white text-3xl sm:text-4xl md:text-4xl lg:text-5xl animate-bounce text-center">😂 Tell Me a Joke</h1>
+</div>
+<div id="joke" class="bg-white px-6 py-6 rounded-2xl shadow-lg text-center text-lg sm:text-xl md:text-2xl text-green-700 font-bold transition-all duration-300 w-full">
+Loading joke...
+</div>
+
+<div> <button id="newJoke" class=" bg-white hover:bg-sky-300 text-orange-500 font-semibold px-5 py-2 rounded-lg transition duration-300"> Show Another Joke</button> </div>
+</div>
+<script>
+const jokes = [
+"Why don’t scientists trust atoms? Because they make up everything!",
+"Why did the math book look sad? Because it had too many problems.",
+"Why was the computer cold? It left its Windows open!",
+"Why don’t programmers like nature? Too many bugs.",
+"Parallel lines have so much in common. It’s a shame they’ll never meet.",
+"What did one ocean say to the other ocean? Nothing, they just waved.",
+"I told my computer I needed a break, and it said 'No problem — I’ll go to sleep.'",
+"Why do Java developers wear glasses? Because they don’t see sharp.",
+"Why can’t your nose be 12 inches long? Because then it would be a foot!",
+"Why did the scarecrow win an award? Because he was outstanding in his field!",
+"Why did the golfer bring two pairs of pants? In case he got a hole in one!",
+"Why don't skeletons fight each other? They don't have the guts.",
+"Why do cows have hooves instead of feet? Because they lactose!",
+"What do you call fake spaghetti? An impasta!",
+"What did the big flower say to the little flower? Hey, bud!",
+"Why can’t your bicycle stand up by itself? Because it’s two-tired!",
+"What do you call cheese that isn't yours? Nacho cheese!",
+"Why did the tomato turn red? Because it saw the salad dressing!",
+"What did one wall say to the other wall? I'll meet you at the corner.",
+"Why did the student eat his homework? Because the teacher said it was a piece of cake!",
+"Why was the broom late? It swept in!",
+"Why was the math lecture so long? The professor kept going off on a tangent!",
+"What do you get when you cross a snowman and a vampire? Frostbite!",
+"What kind of shoes do ninjas wear? Sneakers!",
+"What did the janitor say when he jumped out of the closet? Supplies!",
+"Why can’t your hand be 12 inches long? Because then it would be a foot!",
+"Why don’t we ever tell secrets on a farm? Because the potatoes have eyes and the corn has ears!",
+"Why did the cookie go to the hospital? Because it felt crummy!",
+"What do you call a bear with no teeth? A gummy bear!",
+"Why did the bicycle fall over? Because it was two-tired!",
+"What’s orange and sounds like a parrot? A carrot!",
+"Why did the man run around his bed? Because he was trying to catch up on sleep!",
+"What do you call a factory that makes okay products? A satisfactory!",
+"Why don’t oysters share their pearls? Because they’re shellfish!",
+"Why did the chicken join the band? Because it had the drumsticks!",
+"What kind of tree fits in your hand? A palm tree!",
+"Why did the math teacher love plants? Because they have square roots!",
+"Why was the belt arrested? For holding up a pair of pants!",
+"What did one hat say to the other? You stay here, I'll go on ahead!",
+"Why was the stadium so hot? All the fans left!",
+"Why are ghosts bad liars? Because they are too transparent!",
+"What did the traffic light say to the car? Don’t look! I’m changing!",
+"What kind of key opens a banana? A monkey!",
+"Why did the computer go to the doctor? It had a virus!",
+"Why don’t elephants use computers? They’re afraid of the mouse!",
+"What did one plate say to the other? Lunch is on me!",
+"Why did the coffee file a police report? It got mugged!",
+"Why do bees have sticky hair? Because they use honeycombs!",
+"Why don’t seagulls fly over the bay? Because then they’d be bagels!",
+"Why did the barber win the race? He knew all the shortcuts!"
+];
+const jokesBn = [
+"কেন বিজ্ঞানীরা পরমাণুর উপর বিশ্বাস করে না? কারণ তারা সবকিছুই বানায়!",
+"কেন গণিতের বইটি দুঃখিত দেখাচ্ছিল? কারণ এতে অনেক সমস্যা ছিল।",
+"কেন কম্পিউটার ঠান্ডা লাগছিল? কারণ এটি উইন্ডোজ খোলা রেখেছিল!",
+"কেন প্রোগ্রামাররা প্রকৃতিকে পছন্দ করে না? খুব বেশি বাগ আছে।",
+"সমান্তরাল রেখাগুলোর অনেক কিছু মিল আছে। দুঃখের বিষয় তারা কখনো মিলবে না।",
+"একটি মহাসাগর অন্য মহাসাগরের কাছে কী বলল? কিছু না, তারা শুধু হাত দুলাল।",
+"আমি আমার কম্পিউটারকে বললাম আমি একটু বিরতি চাই, তখন সে বলল 'কোনো সমস্যা নেই — আমি ঘুমিয়ে যাব।'",
+"কেন জাভা ডেভেলপাররা চশমা পরে? কারণ তারা শার্প দেখতে পায় না।",
+"কেন তোমার নাক ১২ ইঞ্চি দীর্ঘ হতে পারবে না? কারণ তখন এটি একটি পা হতো!",
+"কেন পোকারাই পুরস্কার জিতল? কারণ সে তার ক্ষেত্রের বাইরে অসাধারণ ছিল!",
+"কেন গলফার দুই জোড়া প্যান্ট আনল? যাতে হঠাৎ হোল হয়ে গেলে কোনো সমস্যা না হয়!",
+"কেন কঙ্কাল একে অপরের সাথে লড়াই করে না? তাদের সাহস নেই।",
+"কেন গরুর পা নয়, খুর আছে? কারণ তারা ল্যাকটোস (দুধে ল্যাকটোজ) সহ্য করে!",
+"নকল স্প্যাগেটিকে তুমি কী বলবে? ইম্পাস্তা!",
+"বড় ফুল ছোট ফুলকে কী বলল? হেই, বাড!",
+"কেন তোমার সাইকেল নিজের মতো দাঁড়াতে পারে না? কারণ এটি দুই-থাকানো (two-tired)!",
+"যে পনিরটি তোমার নয়, তাকে তুমি কী বলবে? নাচো চিজ!",
+"কেন টমেটো লাল হয়ে গেল? কারণ সে সালাদ ড্রেসিং দেখল!",
+"একটি দেয়াল অন্য দেয়ালের কাছে কী বলল? আমরা কোণে দেখা করব।",
+"কেন শিক্ষার্থী তার হোমওয়ার্ক খেয়েছিল? কারণ শিক্ষক বলেছিল এটি কেকের মতো সহজ।",
+"কেন ঝাড়ু দেরিতে এল? কারণ এটি ঝাঁকুনি দিয়ে এল!",
+"কেন গণিতের লেকচার এত দীর্ঘ ছিল? প্রফেসর বারবার বিচ্যুত হচ্ছিল!",
+"একটি স্নোম্যান এবং ভ্যাম্পায়ারের সংমিশ্রণে কী হয়? ফ্রস্টবাইট!",
+"নিনজারা কী ধরনের জুতো পরে? স্নিকার্স!",
+"যখন পরিচ্ছন্নতাকর্মী আলমারির বাইরে লাফ দিল, সে কী বলল? সরবরাহ!",
+"কেন তোমার হাত ১২ ইঞ্চি দীর্ঘ হতে পারবে না? কারণ তখন এটি একটি পা হতো!",
+"কেন আমরা খামারে গোপন কথা বলি না? কারণ আলুতে চোখ আছে আর ভুট্টার কান আছে!",
+"কেন কুকি হাসপাতালে গেল? কারণ সে ক্রামি (খারাপ) অনুভব করেছিল!",
+"দাঁতের ছাড়া ভালুককে তুমি কী বলবে? গামি বেয়ার!",
+"কেন সাইকেল পড়ে গেল? কারণ এটি দুই-থাকানো (two-tired)!",
+"কোন রঙের জিনিস পাখির মতো শব্দ করে? গাজর!",
+"কেন মানুষ তার বিছানার চারপাশে দৌড়াল? কারণ সে ঘুমে পিছিয়ে পড়ছিল!",
+"যে ফ্যাক্টরি সাধারণ মানের পণ্য তৈরি করে তাকে তুমি কী বলবে? স্যাটিসফ্যাক্টরি!",
+"কেন ঝিনুকরা তাদের মুক্তি শেয়ার করে না? কারণ তারা শেলফিশ!",
+"কেন মুরগি ব্যান্ডে যোগ দিল? কারণ তার ড্রামস্টিক ছিল!",
+"কোন ধরনের গাছ তোমার হাতে ফিট হয়? তালের গাছ!",
+"কেন গণিতের শিক্ষক গাছপালা পছন্দ করে? কারণ তাদের স্কোয়ার রুট আছে!",
+"কেন বেল্ট গ্রেপ্তার হল? কারণ এটি প্যান্ট ধরে রাখছিল!",
+"একটি টুপি অন্য টুপিকে কী বলল? তুমি এখানে থাকো, আমি এগিয়ে যাই!",
+"কেন স্টেডিয়াম এত গরম ছিল? সমস্ত দর্শক চলে গেছে!",
+"ভূতরা কেন মিথ্যাবাদী? কারণ তারা খুব স্বচ্ছ!",
+"ট্রাফিক লাইট গাড়িকে কী বলল? দেখো না! আমি পরিবর্তন করছি!",
+"কোন চাবি কলা খোলে? বানর!",
+"কেন কম্পিউটার ডাক্তারের কাছে গেল? কারণ এতে ভাইরাস ছিল!",
+"কেন হাতি কম্পিউটার ব্যবহার করে না? কারণ তারা মাউস থেকে ভয় পায়!",
+"একটি প্লেট অন্য প্লেটকে কী বলল? দুপুরের খাবার আমার পক্ষে!",
+"কেন কফি পুলিশের কাছে রিপোর্ট করল? কারণ তাকে ছিনতাই করা হলো!",
+"মৌমাছির চুল কেন আঠালো? কারণ তারা হানিকম ব্যবহার করে!",
+"কেন সিগলস উপসাগরের ওপরে উড়ে না? কারণ তখন তারা বাগেল হতো!",
+"কেন নাপারাজ্জি রেস জিতল? কারণ সে সব শর্টকাট জানত!"
+];
+let selectJokes=[];
+const jokeDiv = document.getElementById("joke");
+const newJokeBtn = document.getElementById("newJoke")
+function chooseLanguage()
+{
+const lag=prompt("Which language do you want jokes in? Type 'English' or 'Bangla':").toLowerCase();
+if(lag==="english")
+{
+selectJokes=jokes;
+}
+else if(lag==="bangla")
+{
+selectJokes=jokesBn;
+}
+else
+{
+alert("Invalid Choice!Defaulting to English.")
+selectJokes=jokes;
+}
+}
+
+/*const jokeDiv=document.getElementById("joke");
+const newJokeBtn=document.getElementById("newJoke");*/
+function randomJoke()
+{
+const randomIndex=Math.floor(Math.random()*selectJokes.length);
+jokeDiv.innerHTML=selectJokes[randomIndex];
+}
+chooseLanguage();
+randomJoke();
+newJokeBtn.addEventListener("click",randomJoke);
+</script>
+</body>
+</html>
